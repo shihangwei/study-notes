@@ -11,3 +11,7 @@ B站地址 https://www.bilibili.com/video/av49952624
 2. P2 c#简介<br/>
 
 3. P3 基础01<br/>
+    1. vs code 下安装
+    2. .net core
+       1. clr (Common language Runtime)
+       2. fcl (Framework Class Library)

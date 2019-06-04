@@ -30,4 +30,8 @@ B站地址 https://www.bilibili.com/video/av42364337
    3. OpenID Connect协议
    4. OpenID Connect三个流程(Flow)
    
+4. 建立Identity Server 4 项目，Client Credentials 授权实例
+   1. IS4 服务 ClientCredentials 模式
+   2. 访问程序
+   3. API 服务
    
