@@ -45,7 +45,7 @@ B站地址 https://www.bilibili.com/video/av35227304
         4.  容器被删除了的话，写入的数据，也没有了，那么，需要使用volume
     2.  Volume卷
         1.  如何把源代码装进容器里
-            1.  可以在制作镜像时，直接吧源码嵌入里面（不考虑这个）
+            1.  可以在制作镜像时，直接把源码嵌入里面（不考虑这个）
             2.  把源码挂载到容器的可读写层
         2.  Volume（卷）是容器中的一个特别种类的目录，通常叫做数据卷，里面放置各种类型的数据，<br/>
             例如：代码、日志文件、数据文件等等。
@@ -65,3 +65,40 @@ B站地址 https://www.bilibili.com/video/av35227304
 
 12. 容器网络
     1.  连接方式
+
+13. Docker Compose
+    1.  Compose是一个用来定义和运行多容器Docker应用的工具。<br/>
+        使用Compose的时候，你可以使用一个YAML文件来配置你应用的服务。<br/>
+        然后根据配置，使用一个命令即可创建并运行所有的服务。<br/>
+    2.  Docker Compose可以做很多事情，但是如果只考虑在开发环境里，他可以做下面这些事情<br/>
+        1.  管理整个应用的生命周期：启动、停止、重构建服务，而服务呢，其实就是运行的容器而已；<br/>
+        2.  查看在运行的服务的状态，包括输出日志；<br/>
+        3.  可以在单个容器上运行一次性命令。<br/>
+    3.  通常来水，如果你的应用稍微有点规模，例如你的Web应用需要使用Web服务器、缓存服务器、数据库服务器等，<br/>
+        如果有你手动管理这样的docker应用，就很繁琐，也很容易出错。<br/>
+        而使用Docker Compose的话，他可以定义一个docker-compose.yml文件，这个文件里，你可以定义所有的这些服务及他们的关系。<br/>
+
+**Dockerfile reference**
+
+https://docs.docker.com/engine/reference/builder/
+
+Docker can build images automatically by reading the instructions from a **Dockerfile**. A **Dockerfile** is a text document that contains<br/>
+all the commands a user could call on the command line to assemble an image. Using **docker build** users can create an automated<br/>
+build that executes several command-line instructions in succession.<br/>
+
+>Docker会通过dockerfile的指令来自动创建镜像。一个dockerfile是一个文本文件，包含了用户可以调用命令行上的所有用来组装镜像的命令。<br/>
+>使用docker build命令，用户可以可以创建一个自动化的连续执行多个命令行指令。<br/>
+
+
+1. Usage
+   1. docker build -f  f指向dockerfile文件
+   2. -t 使用镜像, 给生成的镜像命名
+2. FROM 来源的
+3. WORKDIR 路径
+4. EXPOSE 端口
+5. COPY 复制
+6. RUN 编译
+7. ENTRYPOINT 入口点，配置容器启动时运行的命令，可以让容器以应用程序或服务的形式运行。
+   1. Exec格式：ENTRYPOINT ["executable","param1","param2"]这是ENTRYPOINT的推荐格式
+   2. Shell格式：ENTRYPOINT command param1 param2
+   3. 
