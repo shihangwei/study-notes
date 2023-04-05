@@ -3,11 +3,12 @@
 #define ARR_LEN 255  /* 数组长度上限 */
 #define elemType int /* 元素类型 */
 
-void bubbleSort(elemType arr[], int len);    /*1.冒泡排序*/
-void selectionSort(elemType arr[], int len); /*2.选择排序*/
-void insertionSort(elemType arr[], int len); /*3.插入排序*/
-void shellSort(elemType arr[], int len);     /*4.希尔排序*/
-void mergeSort(elemType arr[], int len);     /*5.归并排序*/
+void bubbleSort(elemType arr[], int len);                                    /*1.冒泡排序*/
+void selectionSort(elemType arr[], int len);                                 /*2.选择排序*/
+void insertionSort(elemType arr[], int len);                                 /*3.插入排序*/
+void shellSort(elemType arr[], int len);                                     /*4.希尔排序*/
+void mergeSort(elemType arr[], int len);                                     /*5.归并排序*/
+void mergeSortRecursive(elemType arr[], elemType reg[], int start, int end); /*5.归并排序-递归*/
 
 int main()
 {
@@ -18,8 +19,8 @@ int main()
 
     /*bubbleSort(arr, len);*/
     /*selectionSort(arr, len);*/
-    /*insertionSort(arr, len);*/
-    shellSort(arr, len);
+    insertionSort(arr, len);
+    /*shellSort(arr, len);*/
 
     for (int i = 0; i < len; i++)
     {
@@ -36,10 +37,11 @@ int main()
 void bubbleSort(elemType arr[], int len)
 {
     printf("start bubbleSort...\n");
+    int i, j;
     elemType temp;
-    for (int i = 0; i < len; i++)
+    for (i = 0; i < len - 1; i++)
     {
-        for (int j = 0; j < len - 1 - i; j++)
+        for (j = 0; j < len - 1 - i; j++)
         {
             if (arr[j] > arr[j + 1])
             {
@@ -57,19 +59,21 @@ void bubbleSort(elemType arr[], int len)
 void selectionSort(elemType arr[], int len)
 {
     printf("start selectionSort...\n");
-    for (int i = 0; i < len - 1; i++)
+    int i, j, minIndex;
+    elemType temp;
+    for (i = 0; i < len - 1; i++)
     {
-        int minIndex = i;
-        for (int j = i + 1; j < len; j++)
+        minIndex = i;
+        for (j = i + 1; j < len; j++)
         {
             if (arr[j] < arr[minIndex])
             {
                 minIndex = j;
             }
         }
-        elemType jTemp = arr[minIndex];
+        temp = arr[minIndex];
         arr[minIndex] = arr[i];
-        arr[i] = jTemp;
+        arr[i] = temp;
     }
 }
 
@@ -84,11 +88,11 @@ void insertionSort(elemType arr[], int len)
     for (i = 1; i < len; i++)
     {
         temp = arr[i];
-        for (j = i; j > 0 && temp < arr[j - 1]; j--)
+        for (j = i - 1; j >= 0 && temp < arr[j]; j--)
         {
-            arr[j] = arr[j - 1];
+            arr[j + 1] = arr[j];
         }
-        arr[j] = temp;
+        arr[j + 1] = temp;
     }
 }
 
@@ -115,6 +119,30 @@ void shellSort(elemType arr[], int len)
 }
 
 /*5.归并排序*/
+/*是分治法的典型应用: 1.自上而下的递归;2.自下而上的迭代*/
+/*稳定的*/
 void mergeSort(elemType arr[], int len)
 {
+    // 递归
+    elemType reg[len];
+    mergeSortRecursive(arr, reg, 0, len - 1);
+}
+void mergeSortRecursive(elemType arr[], elemType reg[], int start, int end)
+{
+    if (start >= end)
+        return;
+    int len = end - start, mid = (len >> 1) + start;
+    int start1 = start, end1 = end;
+    int start2 = mid + 1, end2 = end;
+    mergeSortRecursive(arr, reg, start1, end1);
+    mergeSortRecursive(arr, reg, start2, end2);
+    int k = start;
+    while (start1 <= end1 && start2 <= end2)
+        reg[k++] = arr[start1] < arr[start2] ? arr[start1++] : arr[start2++];
+    while (start1 <= end1)
+        reg[k++] = arr[start1++];
+    while (start2 <= end2)
+        reg[k++] = arr[start2++];
+    for (k = start; k <= end; k++)
+        arr[k] = reg[k];
 }
